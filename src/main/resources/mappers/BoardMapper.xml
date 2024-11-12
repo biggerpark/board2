@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 xml 파일은 위 코드를 먼저 적어주어야 한다.-->
+
+<mapper namespace="com.green.board2.BoardMapper">
+    <!-- xml 파일은 인터페이스와 세트이어야 한다.
+즉, 어느 인터페이스와 세트인지 그 인터페이스의 위치를 적어주어야 한다.-->
+
+    <insert id="postReq">
+        INSERT INTO BOARD
+        SET TITLE=#{title},
+            CONTENTS=#{contents},
+            WRITER=#{writer}
+    </insert>
+
+    <select id="getRes">
+        SELECT board_id AS boardId,title,writer,created_at AS createdAt
+        FROM BOARD
+        ORDER BY boardId DESC
+    </select>
+
+    <select id="getOneRes">
+        SELECT board_id AS boardId,title,writer,contents,created_at AS createdAt
+        FROM board
+        WHERE board_id=#{p}
+    </select>
+
+    <update id="putReq">
+        UPDATE board
+        <set>
+             title=#{title}
+            ,contents=#{contents}
+            ,writer=#{writer}
+        </set>
+        WHERE board_id=#{boardId}
+    </update>
+
+    <update id="putReq2">
+        UPDATE board
+        <set>
+            <if test="data.title != null and data.title != ''">
+                title=#{data.title}
+            </if>
+            <if test="data.contents != null and data.contents != ''">
+                ,contents=#{data.contents}
+            </if>
+            <if test="data.writer != null and data.writer != ''">
+                ,writer=#{data.writer}
+            </if>
+        </set>
+        WHERE board_id=#{boardId}
+    </update>
+    
+    <delete id="deleteReq">
+        DELETE
+        FROM board
+        WHERE board_id=#{boardId}
+    </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
